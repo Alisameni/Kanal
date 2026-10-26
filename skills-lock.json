@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-design": {
+      "source": "cline/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "860b2d737f7de8f49d7080acdbfa8e33fe523a15727b0e8d40a38dde8ba4517d"
+    },
+    "site-specification": {
+      "source": "cline/skills",
+      "sourceType": "github",
+      "skillPath": "skills/site-specification/SKILL.md",
+      "computedHash": "6579e49458ec69d68a7bbbd8a9f7294e8b5024c167548c5d7fd6dea460aa42fd"
+    }
+  }
+}
