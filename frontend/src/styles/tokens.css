@@ -1,0 +1,87 @@
+/*
+ * Kanal design tokens.
+ *
+ * Dark ("coal") is the default theme; the light theme is a matching, lower
+ * contrast counterpart. Everything downstream reads these variables only, so
+ * switching <html data-theme> is enough to re-skin the whole UI.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Typography — a Persian-first body face plus a technical mono for labels. */
+  --font-body: 'Vazirmatn', 'Segoe UI', Tahoma, 'Iranian Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Coal surfaces */
+  --bg: #0c0e0f;
+  --surface: #131719;
+  --surface-raised: #191e21;
+  --surface-input: #101416;
+
+  /* Ink */
+  --ink: #c3d0d0;
+  --ink-strong: #eef4f3;
+  --ink-muted: #6d7e81;
+
+  /* Structure */
+  --line: #212a2c;
+  --line-strong: #313c3f;
+
+  /* Accents: teal = channel/assistant, amber = operator/user */
+  --teal: #21d6bd;
+  --teal-soft: rgba(33, 214, 189, 0.12);
+  --teal-line: rgba(33, 214, 189, 0.38);
+  --teal-ink: #04231e;
+
+  --amber: #f0a63a;
+  --amber-soft: rgba(240, 166, 58, 0.12);
+  --amber-line: rgba(240, 166, 58, 0.38);
+
+  --danger: #ff6f61;
+  --danger-soft: rgba(255, 111, 97, 0.12);
+
+  /* Atmosphere */
+  --grid-line: rgba(255, 255, 255, 0.028);
+  --glow-teal: rgba(33, 214, 189, 0.1);
+  --glow-amber: rgba(240, 166, 58, 0.075);
+
+  --shadow: 0 26px 60px -34px rgba(0, 0, 0, 0.92);
+
+  --radius: 3px;
+  --radius-lg: 6px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f1f3f0;
+  --surface: #ffffff;
+  --surface-raised: #fbfbf9;
+  --surface-input: #ffffff;
+
+  --ink: #374142;
+  --ink-strong: #0d1718;
+  --ink-muted: #7b8a8b;
+
+  --line: #e0e4e0;
+  --line-strong: #c5cdc9;
+
+  --teal: #0d8f7c;
+  --teal-soft: rgba(13, 143, 124, 0.1);
+  --teal-line: rgba(13, 143, 124, 0.34);
+  --teal-ink: #ffffff;
+
+  --amber: #a96a0c;
+  --amber-soft: rgba(169, 106, 12, 0.1);
+  --amber-line: rgba(169, 106, 12, 0.34);
+
+  --danger: #bf3a2b;
+  --danger-soft: rgba(191, 58, 43, 0.09);
+
+  --grid-line: rgba(13, 60, 58, 0.05);
+  --glow-teal: rgba(13, 143, 124, 0.07);
+  --glow-amber: rgba(169, 106, 12, 0.06);
+
+  --shadow: 0 20px 46px -32px rgba(13, 23, 24, 0.42);
+}
