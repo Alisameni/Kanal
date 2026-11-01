@@ -29,8 +29,43 @@ export interface ChatTurn {
   content: string
 }
 
+/** One validated research source of a save proposal. */
+export interface ResearchSource {
+  title: string
+  url: string
+}
+
+/**
+ * A save proposal the backend offers alongside a reply.
+ *
+ * The proposal is only *text* at this point: no file exists yet. `save_id` is
+ * the opaque handle the two decision endpoints accept; everything else is shown
+ * as data. `preview` is the exact Markdown that would be written and is optional
+ * -- the backend omits it when the document is too long or contains markup.
+ */
+export interface PendingSave {
+  save_id: string
+  title: string
+  summary: string
+  filename: string
+  sources: ResearchSource[]
+  preview?: string
+}
+
 /** The JSON body returned by a successful `POST /chat`. */
 export interface ChatApiResponse {
   reply: string
   history: ChatTurn[]
+  pending_save?: PendingSave
+}
+
+/** The JSON body returned by a successful `POST /save`. */
+export interface SaveConfirmation {
+  status: 'saved'
+  filename: string
+}
+
+/** The JSON body returned by a successful `POST /save/cancel`. */
+export interface CancelConfirmation {
+  status: 'cancelled'
 }

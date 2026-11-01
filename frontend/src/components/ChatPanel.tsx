@@ -1,17 +1,23 @@
-import type { ChatStatus } from '../hooks/useChat'
+import type { ChatStatus, SaveProposal } from '../hooks/useChat'
 import type { ChatMessage } from '../types'
 import Composer from './Composer'
 import ErrorNotice from './ErrorNotice'
 import MessageList from './MessageList'
+import SaveResearchCard from './SaveResearchCard'
 import TypingIndicator from './TypingIndicator'
 
 interface ChatPanelProps {
   messages: ChatMessage[]
   status: ChatStatus
   error: string | null
+  /** The save proposal of the newest reply, or null when there is none. */
+  proposal: SaveProposal | null
   onSend: (text: string) => void
   onRetry: (id: string) => void
   onDismissError: () => void
+  onConfirmSave: () => void
+  onCancelSave: () => void
+  onDismissProposal: () => void
 }
 
 /** Shown before the first message: a short briefing on how the channel works. */
@@ -37,9 +43,13 @@ function ChatPanel({
   messages,
   status,
   error,
+  proposal,
   onSend,
   onRetry,
   onDismissError,
+  onConfirmSave,
+  onCancelSave,
+  onDismissProposal,
 }: ChatPanelProps) {
   const busy = status === 'pending'
 
@@ -58,6 +68,20 @@ function ChatPanel({
           <Standby />
         ) : (
           <MessageList messages={messages} busy={busy} onRetry={onRetry} />
+        )}
+        {/*
+         * The card follows the reply it belongs to. `key` is the proposal's id,
+         * so a new proposal remounts the card (collapsed, scrolled into view)
+         * while a state change of the same proposal only re-renders it.
+         */}
+        {proposal && (
+          <SaveResearchCard
+            key={proposal.saveId}
+            proposal={proposal}
+            onConfirm={onConfirmSave}
+            onCancel={onCancelSave}
+            onDismiss={onDismissProposal}
+          />
         )}
         {busy && <TypingIndicator />}
         {error && <ErrorNotice message={error} onDismiss={onDismissError} />}

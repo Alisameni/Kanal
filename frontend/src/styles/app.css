@@ -702,6 +702,444 @@ button {
   cursor: not-allowed;
 }
 
+/* ---------------------------------------------------------- save card ---- */
+
+/*
+ * The review card of a save proposal. It is not a chat bubble: it spans the
+ * thread like the error notice, so it reads as a decision panel. The accent bar
+ * on the inline-end edge is teal like an assistant turn, amber while a decision
+ * request is on its way, and red when the proposal ended in an error.
+ */
+.save-card {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px 16px;
+  border: 1px solid var(--line-strong);
+  border-inline-end: 2px solid var(--teal);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  animation: rise 0.32s ease both;
+}
+
+.save-card--saving,
+.save-card--cancelling {
+  border-inline-end-color: var(--amber);
+}
+
+.save-card--cancelled {
+  border-inline-end-color: var(--line-strong);
+}
+
+.save-card--error {
+  border-inline-end-color: var(--danger);
+}
+
+.save-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.save-card__kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+}
+
+.save-card__status {
+  flex: none;
+  padding: 2px 9px;
+  border: 1px solid var(--amber-line);
+  border-radius: var(--radius);
+  background: var(--amber-soft);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.save-card--saved .save-card__status {
+  border-color: var(--teal-line);
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.save-card--error .save-card__status {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.save-card--cancelled .save-card__status,
+.save-card--cancelling .save-card__status {
+  border-color: var(--line-strong);
+  background: var(--surface-input);
+  color: var(--ink-muted);
+}
+
+.save-card__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--ink-strong);
+  overflow-wrap: anywhere;
+}
+
+.save-card__summary {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* The line that says whether anything has been written yet. */
+.save-card__note {
+  margin: 0;
+  padding-inline-start: 11px;
+  border-inline-start: 2px solid var(--amber);
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--ink-muted);
+}
+
+.save-card--saved .save-card__note {
+  border-inline-start-color: var(--teal);
+}
+
+.save-card--error .save-card__note {
+  border-inline-start-color: var(--danger);
+}
+
+.save-card--cancelled .save-card__note {
+  border-inline-start-color: var(--line-strong);
+}
+
+.save-card__error {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--danger);
+  overflow-wrap: anywhere;
+}
+
+.save-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.save-card__meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  min-width: 0;
+}
+
+.save-card__meta dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.save-card__meta dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* The two show/hide controls of the card, styled like the small ghost buttons
+   of the sidebar so nothing new is introduced visually. */
+.save-card__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.save-card__toggle,
+.save-card__cancel,
+.save-card__dismiss {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-input);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.save-card__toggle svg,
+.save-card__cancel svg,
+.save-card__dismiss svg {
+  flex: none;
+  width: 12px;
+  height: 12px;
+}
+
+.save-card__toggle:hover,
+.save-card__toggle[aria-expanded='true'] {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: var(--teal-soft);
+}
+
+.save-card__cancel:hover:not(:disabled) {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.save-card__dismiss:hover {
+  border-color: var(--line-strong);
+  color: var(--ink-strong);
+  background: var(--surface-raised);
+}
+
+.save-card__sources {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 12px 14px;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-input);
+  animation: rise 0.22s ease both;
+}
+
+.save-card__sources li {
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.save-card__sources a {
+  color: var(--teal);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--teal-line);
+}
+
+.save-card__sources a:hover {
+  border-bottom-style: solid;
+}
+
+/* The Markdown preview: scrolls on its own so a long document can never push
+   the decision buttons out of reach. */
+.save-card__preview {
+  max-height: 320px;
+  overflow: auto;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-input);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+  animation: rise 0.22s ease both;
+}
+
+.save-card__preview > :first-child {
+  margin-top: 0;
+}
+
+.save-card__preview > :last-child {
+  margin-bottom: 0;
+}
+
+/* Markdown typography inside the preview. Scoped to this container only, so the
+   rest of the UI keeps its own rhythm. */
+.save-card__preview h1,
+.save-card__preview h2,
+.save-card__preview h3,
+.save-card__preview h4,
+.save-card__preview h5,
+.save-card__preview h6 {
+  margin: 18px 0 8px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--ink-strong);
+}
+
+.save-card__preview h1 {
+  font-size: 18px;
+}
+
+.save-card__preview h2 {
+  font-size: 16px;
+}
+
+.save-card__preview h3,
+.save-card__preview h4,
+.save-card__preview h5,
+.save-card__preview h6 {
+  font-size: 14.5px;
+}
+
+.save-card__preview p,
+.save-card__preview li {
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.save-card__preview p {
+  margin: 10px 0;
+}
+
+.save-card__preview ul,
+.save-card__preview ol {
+  margin: 10px 0;
+  padding-inline-start: 22px;
+}
+
+.save-card__preview li {
+  margin: 3px 0;
+}
+
+.save-card__preview blockquote {
+  margin: 12px 0;
+  padding-inline-start: 12px;
+  border-inline-start: 2px solid var(--line-strong);
+  color: var(--ink-muted);
+}
+
+.save-card__preview code {
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.save-card__preview pre {
+  margin: 12px 0;
+  padding: 12px 14px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.save-card__preview pre code {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.save-card__preview a {
+  color: var(--teal);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--teal-line);
+}
+
+.save-card__preview a:hover {
+  border-bottom-style: solid;
+}
+
+.save-card__preview hr {
+  margin: 16px 0;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+.save-card__preview th,
+.save-card__preview td {
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  text-align: start;
+}
+
+.save-card__preview table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.save-card__preview th {
+  background: var(--surface-raised);
+  color: var(--ink-strong);
+  font-weight: 600;
+}
+
+.save-card__preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+/* The decision. The primary button mirrors the composer's send button, so
+   "confirm" reads as the one affirmative action of the panel. */
+.save-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.save-card__confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--teal);
+  border-radius: var(--radius);
+  background: var(--teal);
+  color: var(--teal-ink);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.save-card__confirm svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.save-card__confirm:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px -12px var(--teal);
+}
+
+.save-card__confirm:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.save-card__confirm:disabled,
+.save-card__cancel:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* --------------------------------------------------------- animation ---- */
 
 @keyframes rise {
@@ -822,6 +1260,10 @@ button {
 
   .msg {
     max-width: 92%;
+  }
+
+  .save-card {
+    padding: 16px 16px 14px;
   }
 }
 

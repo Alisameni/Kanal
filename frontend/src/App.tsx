@@ -9,10 +9,14 @@ function App() {
     status,
     error,
     connection,
+    proposal,
     sendMessage,
     retryMessage,
     clearChat,
     dismissError,
+    confirmSave,
+    cancelSave,
+    dismissProposal,
   } = useChat()
   const { theme, setTheme } = useTheme()
 
@@ -30,9 +34,13 @@ function App() {
         messages={messages}
         status={status}
         error={error}
+        proposal={proposal}
         onSend={sendMessage}
         onRetry={retryMessage}
         onDismissError={dismissError}
+        onConfirmSave={confirmSave}
+        onCancelSave={cancelSave}
+        onDismissProposal={dismissProposal}
       />
     </div>
   )

@@ -97,7 +97,11 @@ Start the frontend in a second terminal, from the repository root:
 npm run dev
 ```
 
-Open the local address printed by Vite, usually `http://localhost:5173`.
+Open `http://127.0.0.1:5173`. `http://localhost:5173` works as well; the dev server is
+pinned to the IPv4 loopback address (see `server.host` in `frontend/vite.config.ts`), so it
+always answers on the address above instead of binding to IPv6 only. Port 5173 is fixed
+(`strictPort`), and `npm run dev` fails with a clear message if that port is already taken
+instead of quietly serving a different one.
 
 The frontend uses Vite's development proxy to communicate with the local backend.
 
